@@ -3,10 +3,15 @@ package com.quizapp.attempt;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 public interface AttemptRepository extends JpaRepository<Attempt, Long> {
+
+    /** Quiz silinirken bağlı tüm denemeleri kaldırır */
+    @Transactional
+    void deleteByQuizId(Long quizId);
 
     /** Kullanıcının geçmiş denemeleri — en yeni önce */
     List<Attempt> findByUserIdOrderByCreatedAtDesc(Long userId);

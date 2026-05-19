@@ -1,5 +1,6 @@
 package com.quizapp.quiz;
 
+import com.quizapp.attempt.AttemptRepository;
 import com.quizapp.category.Category;
 import com.quizapp.category.CategoryRepository;
 import com.quizapp.common.exception.ApiException;
@@ -13,6 +14,7 @@ import com.quizapp.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class QuizService {
     private final QuestionRepository questionRepository;
     private final QuestionService questionService;
     private final UserRepository userRepository;
+    private final AttemptRepository attemptRepository;
 
     public List<QuizResponse> findAll() {
         return quizRepository.findAll().stream()
@@ -93,10 +96,13 @@ public class QuizService {
         return toSummaryResponse(quizRepository.save(quiz));
     }
 
+    @Transactional
     public void delete(Long id) {
         if (!quizRepository.existsById(id)) {
             throw new ApiException("Quiz bulunamadı: " + id, HttpStatus.NOT_FOUND);
         }
+        // Önce bağlı denemeleri sil (FK constraint: attempts.quiz_id → quizzes.id)
+        attemptRepository.deleteByQuizId(id);
         quizRepository.deleteById(id);
     }
 
