@@ -172,7 +172,7 @@ const toast     = useToast()
 const loading = ref(false)
 const form    = ref({ username: '', password: '' })
 
-const features = ['Geri sayım sayacı', 'ECharts grafik', 'Liderlik tablosu', 'Kategori bazlı quizler']
+const features = ['Geri sayım sayacı', 'Liderlik tablosu', 'Kategori bazlı quizler']
 
 const demoAccounts = [
   { username: 'admin', password: 'admin123', role: 'Admin' },
