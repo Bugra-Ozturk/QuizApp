@@ -2,14 +2,15 @@ package com.quizapp.leaderboard;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
- * GET /api/leaderboard → kimliği doğrulanmış tüm kullanıcılara açık
+ * Liderlik tablosu endpoint'leri.
+ *
+ * GET /api/leaderboard           → genel liderlik (ortalama skor)
+ * GET /api/leaderboard?quizId=1  → quiz bazlı liderlik (en yüksek skor)
  */
 @RestController
 @RequestMapping("/api/leaderboard")
@@ -19,7 +20,11 @@ public class LeaderboardController {
     private final LeaderboardService leaderboardService;
 
     @GetMapping
-    public ResponseEntity<List<LeaderboardEntry>> getLeaderboard() {
-        return ResponseEntity.ok(leaderboardService.getLeaderboard());
+    public ResponseEntity<List<LeaderboardEntry>> getLeaderboard(
+            @RequestParam(required = false) Long quizId) {
+        if (quizId != null) {
+            return ResponseEntity.ok(leaderboardService.getQuizLeaderboard(quizId));
+        }
+        return ResponseEntity.ok(leaderboardService.getGlobalLeaderboard());
     }
 }

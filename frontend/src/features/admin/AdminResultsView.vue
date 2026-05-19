@@ -45,7 +45,7 @@
             :key="a.id"
             class="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors"
           >
-            <td class="px-5 py-3.5 font-medium text-gray-200">{{ a.quizTitle }}</td>
+            <td class="px-5 py-3.5 font-medium text-gray-200">{{ a.username }}</td>
             <td class="px-5 py-3.5 text-gray-400 max-w-[200px] truncate">{{ a.quizTitle }}</td>
             <td class="px-5 py-3.5 text-right font-semibold" :class="scoreColor(a.score)">
               {{ Math.round(a.score) }}%

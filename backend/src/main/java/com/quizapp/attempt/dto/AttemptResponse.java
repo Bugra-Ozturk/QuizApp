@@ -13,6 +13,7 @@ public class AttemptResponse {
     private Long id;
     private Long quizId;
     private String quizTitle;
+    private String username;
     private Double score;
     private Integer totalQuestions;
     private Integer correctCount;

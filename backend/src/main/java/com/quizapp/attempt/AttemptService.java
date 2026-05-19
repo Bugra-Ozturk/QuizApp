@@ -138,6 +138,7 @@ public class AttemptService {
                 .id(attempt.getId())
                 .quizId(attempt.getQuiz().getId())
                 .quizTitle(attempt.getQuiz().getTitle())
+                .username(attempt.getUser().getUsername())
                 .score(attempt.getScore())
                 .totalQuestions(attempt.getTotalQuestions())
                 .correctCount(attempt.getCorrectCount())
