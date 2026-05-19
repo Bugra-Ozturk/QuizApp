@@ -1,0 +1,29 @@
+# ============================================================
+# Caddyfile — QuizApp Frontend Sunucu Yapılandırması
+#
+# Caddy üç görevi üstlenir:
+#   1) Vue SPA'yı statik olarak sunar
+#   2) /api/* isteklerini backend container'a yönlendirir
+#   3) Bilinmeyen path'lerde index.html döner (SPA fallback)
+#
+# Nginx'e kıyasla avantajı: otomatik HTTPS (üretimde etki alanı tanımlayınca),
+# daha okunabilir ve daha az yapılandırma gerektiren söz dizimi.
+# ============================================================
+
+:80 {
+    # ── API Proxy ──────────────────────────────────────────────────────────────
+    # /api ile başlayan tüm istekleri backend servisine ilet.
+    # Container adı "quizapp-backend", port 8080.
+    handle /api/* {
+        reverse_proxy quizapp-backend:8080
+    }
+
+    # ── Statik dosyalar (Vue build çıktısı) ───────────────────────────────────
+    handle {
+        root * /usr/share/caddy
+        # SPA fallback: 404 durumunda index.html döndür
+        # Vue Router bu sayede tüm path'leri yönetebilir
+        try_files {path} /index.html
+        file_server
+    }
+}

@@ -1,0 +1,72 @@
+# ========================
+# Java / Maven
+# ========================
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar.gz
+*.rar
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# ========================
+# Node / Frontend
+# ========================
+node_modules/
+dist/
+.vite/
+*.local
+.npm
+.yarn-integrity
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
+# ========================
+# IDE / Editor
+# ========================
+.idea/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ========================
+# OS
+# ========================
+.DS_Store
+Thumbs.db
+.Spotlight-V100
+.Trashes
+
+# ========================
+# Docker
+# ========================
+.docker/
+
+# ========================
+# Çevre değişkenleri
+# ========================
+.env
+.env.local
+.env.production
+
+# ========================
+# Log dosyaları
+# ========================
+*.log
+logs/
+spring.log

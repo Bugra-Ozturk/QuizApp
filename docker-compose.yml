@@ -1,0 +1,67 @@
+version: "3.9"
+
+# ============================================================
+# QuizApp — Docker Compose
+# 3 servis: PostgreSQL veritabanı, Spring Boot backend, Vue frontend (Caddy)
+# ============================================================
+
+services:
+
+  # ----------------------------------------------------------
+  # 1) Veritabanı: PostgreSQL 16
+  # ----------------------------------------------------------
+  db:
+    image: postgres:16-alpine
+    container_name: quizapp-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: quizapp
+      POSTGRES_USER: quizapp
+      POSTGRES_PASSWORD: quizapp123
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"          # geliştirme sırasında dışarıdan erişim için
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U quizapp -d quizapp"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------------
+  # 2) Backend: Spring Boot 3 (Java 21)
+  # ----------------------------------------------------------
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: quizapp-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/quizapp
+      SPRING_DATASOURCE_USERNAME: quizapp
+      SPRING_DATASOURCE_PASSWORD: quizapp123
+      JWT_SECRET: "quizapp-super-secret-jwt-key-change-in-production-min32chars!"
+      JWT_EXPIRATION_MS: 86400000   # 24 saat
+    ports:
+      - "8080:8080"
+
+  # ----------------------------------------------------------
+  # 3) Frontend: Vue 3 build → Caddy (reverse proxy + SPA)
+  # ----------------------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: quizapp-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  pgdata:

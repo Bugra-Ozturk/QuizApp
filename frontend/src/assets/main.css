@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: #0f0f1a;
+    --color-surface: #1a1a2e;
+    --color-border: #2a2a40;
+  }
+
+  body {
+    @apply bg-surface-900 text-gray-100 font-sans antialiased;
+    min-height: 100vh;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  /* Ortak buton stili — tüm birincil butonlarda kullanılır */
+  .btn-primary {
+    @apply bg-primary-500 hover:bg-primary-600 text-white font-medium
+           px-5 py-2.5 rounded-lg transition-colors duration-150
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-surface-800 hover:bg-white/5 text-gray-200 font-medium
+           px-5 py-2.5 rounded-lg border border-white/10 transition-colors duration-150;
+  }
+
+  .btn-danger {
+    @apply bg-red-600 hover:bg-red-700 text-white font-medium
+           px-5 py-2.5 rounded-lg transition-colors duration-150;
+  }
+
+  /* Kart bileşeni */
+  .card {
+    @apply bg-surface-800 border border-white/10 rounded-xl p-6;
+  }
+
+  /* Form input */
+  .input {
+    @apply w-full bg-surface-900 border border-white/10 rounded-lg
+           px-4 py-2.5 text-gray-100 placeholder-gray-500
+           focus:outline-none focus:border-primary-500/60 focus:ring-1 focus:ring-primary-500/30
+           transition-colors duration-150;
+  }
+
+  /* Rozet */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+}
+
+/* Toastification tema uyumu */
+.Vue-Toastification__container {
+  font-family: 'Inter', system-ui, sans-serif;
+}

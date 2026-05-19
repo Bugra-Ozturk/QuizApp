@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: QuizApp
+
+  # ── Veritabanı bağlantısı ──────────────────────────────────────────────────
+  # Ortam değişkenleri (docker-compose'dan gelir); yoksa yerel geliştirme değerleri.
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/quizapp}
+    username: ${SPRING_DATASOURCE_USERNAME:quizapp}
+    password: ${SPRING_DATASOURCE_PASSWORD:quizapp123}
+    driver-class-name: org.postgresql.Driver
+
+  # ── JPA / Hibernate ───────────────────────────────────────────────────────
+  jpa:
+    hibernate:
+      # update: tablolar otomatik oluşturulur/güncellenir (geliştirme için)
+      # Üretimde validate veya none kullanılmalı
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+# ── JWT Ayarları ──────────────────────────────────────────────────────────────
+# secret: HMAC-SHA imzalama anahtarı (üretimde güçlü bir değer kullanın)
+# expiration-ms: Token geçerlilik süresi (milisaniye); varsayılan 24 saat
+jwt:
+  secret: ${JWT_SECRET:quizapp-super-secret-jwt-key-change-in-production-min32chars!}
+  expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+
+# ── Sunucu ayarları ───────────────────────────────────────────────────────────
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+# ── Loglama ───────────────────────────────────────────────────────────────────
+logging:
+  level:
+    com.quizapp: DEBUG
+    org.springframework.security: INFO
