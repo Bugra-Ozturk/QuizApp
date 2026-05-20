@@ -17,6 +17,7 @@
         <!-- Admin menü -->
         <template v-if="authStore.isAdmin">
           <span class="w-px h-5 bg-white/10 mx-1" />
+          <NavLink to="/admin/categories" icon="folder">Kategoriler</NavLink>
           <NavLink to="/admin/questions" icon="question-circle">Sorular</NavLink>
           <NavLink to="/admin/quizzes" icon="cog">Quizler (A)</NavLink>
           <NavLink to="/admin/results" icon="chart-bar">Sonuçlar</NavLink>

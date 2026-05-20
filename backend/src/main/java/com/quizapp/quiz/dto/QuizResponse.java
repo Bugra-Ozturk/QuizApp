@@ -15,5 +15,6 @@ public class QuizResponse {
     private String categoryName;
     private Integer timeLimitSeconds;
     private Integer questionCount;
+    private List<Long> questionIds;           // admin düzenleme için
     private List<QuestionResponse> questions; // null → liste görünümü; dolu → quiz oturumu
 }

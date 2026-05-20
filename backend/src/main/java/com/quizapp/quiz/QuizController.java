@@ -42,6 +42,13 @@ public class QuizController {
         return ResponseEntity.ok(quizService.findForPlay(id));
     }
 
+    /** Admin düzenleme formu: quiz detayı + questionIds */
+    @GetMapping("/api/admin/quizzes/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<QuizResponse> getForAdmin(@PathVariable Long id) {
+        return ResponseEntity.ok(quizService.findForAdmin(id));
+    }
+
     @PostMapping("/api/admin/quizzes")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<QuizResponse> create(

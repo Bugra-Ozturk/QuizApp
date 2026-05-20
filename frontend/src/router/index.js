@@ -28,9 +28,10 @@ const HistoryView = () => import('@/features/results/HistoryView.vue')
 const LeaderboardView = () => import('@/features/leaderboard/LeaderboardView.vue')
 
 // Admin
-const AdminQuestionView = () => import('@/features/admin/AdminQuestionView.vue')
-const AdminQuizView     = () => import('@/features/admin/AdminQuizView.vue')
-const AdminResultsView  = () => import('@/features/admin/AdminResultsView.vue')
+const AdminQuestionView  = () => import('@/features/admin/AdminQuestionView.vue')
+const AdminQuizView      = () => import('@/features/admin/AdminQuizView.vue')
+const AdminResultsView   = () => import('@/features/admin/AdminResultsView.vue')
+const AdminCategoryView  = () => import('@/features/admin/AdminCategoryView.vue')
 
 const routes = [
   { path: '/', redirect: '/quizzes' },
@@ -47,9 +48,10 @@ const routes = [
   { path: '/leaderboard',       component: LeaderboardView, meta: { requiresAuth: true } },
 
   // ── Admin ──────────────────────────────────────────────────────────────────
-  { path: '/admin/questions', component: AdminQuestionView, meta: { requiresAuth: true, requiresAdmin: true } },
-  { path: '/admin/quizzes',   component: AdminQuizView,    meta: { requiresAuth: true, requiresAdmin: true } },
-  { path: '/admin/results',   component: AdminResultsView, meta: { requiresAuth: true, requiresAdmin: true } },
+  { path: '/admin/questions',  component: AdminQuestionView,  meta: { requiresAuth: true, requiresAdmin: true } },
+  { path: '/admin/quizzes',   component: AdminQuizView,      meta: { requiresAuth: true, requiresAdmin: true } },
+  { path: '/admin/results',   component: AdminResultsView,   meta: { requiresAuth: true, requiresAdmin: true } },
+  { path: '/admin/categories', component: AdminCategoryView, meta: { requiresAuth: true, requiresAdmin: true } },
 
   // 404
   { path: '/:pathMatch(.*)*', redirect: '/quizzes' }

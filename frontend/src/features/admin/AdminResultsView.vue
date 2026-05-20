@@ -82,7 +82,7 @@ const avgScore = computed(() => {
 })
 
 const uniqueUsers = computed(() =>
-  new Set(attempts.value.map(a => a.quizTitle)).size
+  new Set(attempts.value.map(a => a.username)).size
 )
 
 function scoreColor(s) {

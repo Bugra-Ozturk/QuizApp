@@ -62,6 +62,23 @@ public class QuizService {
                 .build();
     }
 
+    /** Admin düzenleme formu için quiz detayı — questionIds dahil */
+    public QuizResponse findForAdmin(Long id) {
+        Quiz quiz = getOrThrow(id);
+        List<Long> questionIds = quiz.getQuestions().stream()
+                .map(q -> q.getId())
+                .toList();
+        return QuizResponse.builder()
+                .id(quiz.getId())
+                .title(quiz.getTitle())
+                .categoryId(quiz.getCategory().getId())
+                .categoryName(quiz.getCategory().getName())
+                .timeLimitSeconds(quiz.getTimeLimitSeconds())
+                .questionCount(questionIds.size())
+                .questionIds(questionIds)
+                .build();
+    }
+
     public QuizResponse create(QuizRequest request, String creatorUsername) {
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new ApiException("Kategori bulunamadı", HttpStatus.NOT_FOUND));

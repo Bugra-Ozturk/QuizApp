@@ -92,7 +92,16 @@ onMounted(async () => {
 })
 
 function openCreate() { editingQuiz.value = null; showModal.value = true }
-function openEdit(q)  { editingQuiz.value = { ...q }; showModal.value = true }
+
+async function openEdit(q) {
+  try {
+    const { data } = await http.get(`/admin/quizzes/${q.id}`)
+    editingQuiz.value = data
+    showModal.value = true
+  } catch {
+    toast.error('Quiz detayı alınamadı.')
+  }
+}
 
 async function saveQuiz(payload) {
   try {

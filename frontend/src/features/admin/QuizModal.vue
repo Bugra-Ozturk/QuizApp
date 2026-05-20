@@ -78,7 +78,7 @@ const form = ref({
   title:            props.quiz?.title ?? '',
   categoryId:       props.quiz?.categoryId ?? '',
   timeLimitSeconds: props.quiz?.timeLimitSeconds ?? 300,
-  questionIds:      []
+  questionIds:      props.quiz?.questionIds ? [...props.quiz.questionIds] : []
 })
 
 function submit() {
